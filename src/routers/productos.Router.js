@@ -1,5 +1,6 @@
-import { Router } from "express"
+import { Router, request } from "express"
 import { managerProducto } from "../../managerProducto.js"
+import { uploader } from "../utils.js"
 import { __dirname } from "../utils.js"
 
 const router = Router()
@@ -12,8 +13,15 @@ router.get("/", async (req, res) => {
     res.json({ productos })
 })
 
-router.post("/", async (req, res) => {
+router.post("/",uploader.single("file"), async (req, res) => {
+// if (!req.file) {
+//     return res.status(400).send({status:"error",mensaje:"no se adjunto archivo"})
+//     }
+// console.log(req.file)
+
     const producto = req.body
+    producto.thumbnails =req.file.path
+    
     const nuevoProducto = await ManagerProducto.addProduct(producto)
     res.json({ message: "Producto creado", producto: nuevoProducto })
 })
