@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     const producto = req.body
     const nuevoProducto = await ManagerProducto.addProduct(producto)
-    res.json({ message: "Prodcuto creado", producto: nuevoProducto })
+    res.json({ message: "Producto creado", producto: nuevoProducto })
 })
 
 router.get("/:idProducto", async (req, res) => {
